@@ -16,6 +16,10 @@ a:hover {
   text-decoration: underline;
 }
 
+div.row {
+    margin-bottom: 1em;
+}
+
 code {
   background-color: #f8f8f8;
   border: 1px solid #ddd;
@@ -61,7 +65,18 @@ ul {
   padding-left: 30px;
 }
 
-.newsContainer {
+.add-source-form {
+    padding-left: 1em;
+    border-left: 1px solid black;
+}
+
+.news-container {
     width:10em;
-    border: 1px solid black;
+    border: 1px solid blue;
+    border-radius: 5px;
+}
+
+.container-title {
+    text-align: center;
+    border-bottom: 1px solid blue;
 }

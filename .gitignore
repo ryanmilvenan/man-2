@@ -28,3 +28,9 @@ node_modules
 .lock-wscript
 
 *.swp
+
+mongodb/
+
+common/
+
+lib/
