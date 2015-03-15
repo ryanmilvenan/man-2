@@ -48,50 +48,40 @@ var AddSourceForm = React.createClass({
 })
 
 var DisplayCase = React.createClass({
-    
     render: function() {
         var containers = this.props.data.map(function(container) {
             return (
                 <NewsContainer url={container.url} title={container.title} />
             );
         });
-        this.props.wrapRows()
+
+        console.log("Containers size "+containers.length)
+        var chunks = [];
+        var i,j,chunk = 4;
+        for(i = 0, j = containers.length; i<10; i += chunk) {
+            var chunkArr = containers.slice(i, i+chunk);
+            chunks.push(chunkArr);
+        }
+        console.log("Chunks size "+chunks.length)
+
+        var rows = chunks.map(function(chunk) {
+            return(
+                <div className="row">
+                    {chunk}
+                </div>
+            );
+        }) 
+
+        console.log("ROWS" +rows)
         return (
             <div className="display-case nine columns">
-                {containers}
+                {rows}
             </div>
         );
     }
 });
 
 var NewsStand = React.createClass({
-    wrapRows: function() {
-        
-        var idx = $('.display-case').children().length;
-        
-        var numRowsArr = []
-        var classIdx = 0;
-        var childIdx = 0;
-        $('.display-case').find('.news-container').each(function(container) {
-            if(childIdx % 4 == 0) {
-                classIdx++;
-                numRowsArr.push(classIdx);
-            }
-            var rowName = "row-"+classIdx;
-            $(this).addClass(rowName)
-            childIdx++;
-        });
-        
-        if(childIdx >= 4) {
-            for(var i = 0; i < numRowsArr.length; i++) {
-                var rowName = ".row-" + numRowsArr[i];
-                var wrapped = $(rowName).parent().hasClass('row');
-                if(!wrapped) {
-                    $(rowName).wrapAll("<div class='row' />");
-                }
-            }
-        }
-    },
     loadNewsSources: function() {
         $.ajax({
             url: this.props.url,
@@ -99,7 +89,6 @@ var NewsStand = React.createClass({
             success: function(data) {
                 console.log(data);
                 this.setState({data: data});
-                this.wrapRows();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -116,7 +105,7 @@ var NewsStand = React.createClass({
     render: function() {
         return (
             <div className="news-stand twelve columns">
-                <DisplayCase url={this.props.url} data={this.state.data} wrapRows={this.wrapRows} />
+                <DisplayCase url={this.props.url} data={this.state.data} />
                 <AddSourceForm url={this.props.url} />
             </div>
         );
