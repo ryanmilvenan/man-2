@@ -1,4 +1,4 @@
-
+var socket = io();
 var NewsContainer = React.createClass({
     getInitialState: function() {
         return {data: []};
@@ -55,14 +55,12 @@ var DisplayCase = React.createClass({
             );
         });
 
-        console.log("Containers size "+containers.length)
         var chunks = [];
         var i,j,chunk = 4;
-        for(i = 0, j = containers.length; i<10; i += chunk) {
+        for(i = 0, j = containers.length; i<j; i += chunk) {
             var chunkArr = containers.slice(i, i+chunk);
             chunks.push(chunkArr);
         }
-        console.log("Chunks size "+chunks.length)
 
         var rows = chunks.map(function(chunk) {
             return(
@@ -72,7 +70,6 @@ var DisplayCase = React.createClass({
             );
         }) 
 
-        console.log("ROWS" +rows)
         return (
             <div className="display-case nine columns">
                 {rows}
@@ -96,11 +93,11 @@ var NewsStand = React.createClass({
         });
     },
     getInitialState: function() {
-        return {data: [], rowCount: 0};
+        socket.on('update:sources', this.loadNewsSources);
+        return {data: []};
     },
     componentDidMount: function() {
         this.loadNewsSources();
-        setInterval(this.loadNewsSources, this.props.pollInterval)
     },
     render: function() {
         return (
