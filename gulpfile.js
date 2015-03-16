@@ -1,24 +1,22 @@
 var gulp        = require('gulp'),
     browserSync = require('browser-sync'),
-    nodemon     = require('gulp-nodemon')
+    nodemon     = require('gulp-nodemon');
 
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', ['develop'], function() {
     browserSync({
-        proxy: "localhost:3000"
+        proxy: "http://localhost:3000",
+        files: ['public/**/*.*', './*.js'],
+        port:7000
+    });
+
+});
+
+gulp.task('develop', function(cb) {
+    return nodemon({ script: 'server.js', ext: 'html js'})
+    .on('start', function() {
     });
 });
 
-gulp.task('develop', function() {
-    nodemon({ script: 'server.js', ext: 'html js'})
-    .on('restart', function() {
-        console.log('restarted!')
-    })
-})
+gulp.task('default', ['browser-sync'], function() {
 
-gulp.task('watch', function() {
-    gulp.watch('public/css/*.css', ['browser-sync'])
-    gulp.watch('public/scripts/*.js', ['browser-sync'])
-    gulp.watch('./*.js', ['browser-sync'])
 });
-
-gulp.task('default', ['watch', 'develop']);

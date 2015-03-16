@@ -1,14 +1,31 @@
 var socket = io();
 var NewsContainer = React.createClass({
+    updateItems: function(item) {
+        if(item.sourceID == this.props.sourceID) {
+            var newData = this.state.data;
+            newData.push(item.data);
+            this.setState(newData);
+        }
+    },
     getInitialState: function() {
+        socket.on('stream:item', this.updateItems);
         return {data: []};
     },
     render: function() {
+        var slice = this.state.data.slice(0, this.props.numItems);
+        var items = slice.map(function(item) {
+            return (
+                <div className="feed-item">
+                    <a href={item.link}>{item.title}</a>
+                </div>
+            )
+        })
         return (
             <div className= "news-container three columns">
                 <h3 className="container-title">
                     {this.props.title}
                 </h3>
+                {items}
             </div>
         );
     }
@@ -23,18 +40,7 @@ var AddSourceForm = React.createClass({
         if(!title || !url) {
             return;
         }
-        $.ajax({
-            url:this.props.url,
-            dataType:'json',
-            method: 'POST',
-            data: {title: title, url: url},
-            success: function(data) {
-                console.log(data);
-            },
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        socket.emit('sources:new', {title: title, url: url});
     },
     render: function() {
         return (
@@ -51,7 +57,7 @@ var DisplayCase = React.createClass({
     render: function() {
         var containers = this.props.data.map(function(container) {
             return (
-                <NewsContainer url={container.url} title={container.title} />
+                <NewsContainer url={container.url} title={container.title} sourceID={container.sourceID} numItems={10} />
             );
         });
 
@@ -80,20 +86,14 @@ var DisplayCase = React.createClass({
 
 var NewsStand = React.createClass({
     loadNewsSources: function() {
-        $.ajax({
-            url: this.props.url,
-            dataType: 'json',
-            success: function(data) {
-                console.log(data);
-                this.setState({data: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        socket.emit('sources:retrieve')
+    },
+    updateSourceState: function(data) {
+        this.setState({data: data});
     },
     getInitialState: function() {
         socket.on('update:sources', this.loadNewsSources);
+        socket.on('sources:found', this.updateSourceState);
         return {data: []};
     },
     componentDidMount: function() {

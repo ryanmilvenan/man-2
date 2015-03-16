@@ -10,6 +10,7 @@ body {
 a {
   color: #4183c4;
   text-decoration: none;
+  font-size: 0.8em;
 }
 
 a:hover {
@@ -74,9 +75,15 @@ ul {
     width:10em;
     border: 1px solid blue;
     border-radius: 5px;
+    padding-left:0.3em;
+    padding-right:0.3em;
 }
 
 .container-title {
     text-align: center;
     border-bottom: 1px solid blue;
+}
+
+.feed-item {
+    border-bottom: 1px dashed black;
 }
