@@ -32,3 +32,5 @@ node_modules
 mongodb/
 
 common/
+
+*.DS_Store

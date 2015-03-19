@@ -1,3 +1,44 @@
+@font-face {
+    font-family: 'icomoon';
+    src:url('../fonts/icomoon.eot?2q62uk');
+    src:url('../fonts/icomoon.eot?#iefix2q62uk') format('embedded-opentype'),
+        url('../fonts/icomoon.woff?2q62uk') format('woff'),
+        url('../fonts/icomoon.ttf?2q62uk') format('truetype'),
+        url('../fonts/icomoon.svg?2q62uk#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-plus:before {
+    content: "\ea0a";
+}
+
+.icon-cross:before {
+    content: "\ea0f";
+}
+
+.icon-cross {
+    color: red;
+}
+
+.icon-plus {
+    color: blue;
+}
+
 body {
   background: #fff;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -86,4 +127,45 @@ ul {
 
 .feed-item {
     border-bottom: 1px dashed black;
+    z-index: -1;
+}
+
+.delete-button {
+    height:1em;
+    width:1em;
+    float: right;
+    position: relative;
+    margin-top: 0.4em;
+}
+
+.delete-button a {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-decoration: none;
+    z-index: 10;
+}
+
+.expand-button {
+    height:1em;
+    width:1em;
+    position: relative;
+    display: block-inline;
+    float:left;
+    margin-top: 0.3em;
+    margin-right: 0.2em;
+    border: 1px dashed blue;
+    border-radius: 3px;
+}
+
+.expand-button a {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-decoration: none;
+    z-index: 10;
 }

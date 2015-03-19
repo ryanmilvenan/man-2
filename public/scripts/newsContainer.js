@@ -1,4 +1,26 @@
 var socket = io();
+
+var NewsItem = React.createClass({
+    getInitialState: function() {
+        return {description: []};
+    },
+    expandArticle: function() {
+        if(this.state.description.length > 0) {
+            this.setState({description: []}); 
+        } else {
+            this.setState({description: this.props.data.description})
+        }
+        console.log(this.props.data)
+    },
+    render: function() {
+        return (
+            <div className="feed-item">
+                <a href={this.props.link}>{this.props.title}</a>
+            </div>
+        )
+    }
+});
+
 var NewsContainer = React.createClass({
     updateItems: function(item) {
         if(item.sourceID == this.props.sourceID) {
@@ -6,6 +28,9 @@ var NewsContainer = React.createClass({
             newData.push(item.data);
             this.setState(newData);
         }
+    },
+    deleteSource: function() {
+       socket.emit('sources:remove', {sourceID: this.props.sourceID}) 
     },
     getInitialState: function() {
         socket.on('stream:item', this.updateItems);
@@ -15,13 +40,14 @@ var NewsContainer = React.createClass({
         var slice = this.state.data.slice(0, this.props.numItems);
         var items = slice.map(function(item) {
             return (
-                <div className="feed-item">
-                    <a href={item.link}>{item.title}</a>
-                </div>
+                <NewsItem link={item.link} title={item.title} data={item} />
             )
         })
         return (
             <div className= "news-container three columns">
+                <div className= "delete-button icon-cross">
+                    <a href="#" onClick={this.deleteSource}></a>
+                </div>
                 <h3 className="container-title">
                     {this.props.title}
                 </h3>
@@ -32,7 +58,34 @@ var NewsContainer = React.createClass({
 
 });
 
+var SideBar = React.createClass({
+    getInitialState: function() {
+        return {sourceForm: false}
+    },
+    toggleHidden: function() {
+        if(this.state.sourceForm) {
+            this.setState({sourceForm: false})
+        } else
+            this.setState({sourceForm: true}) 
+    },
+    render: function() {
+        return (
+            <div>
+                <button onClick={this.toggleHidden}>Hide</button>
+                {this.state.sourceForm ? <AddSourceForm url={this.props.url} /> : null }
+            </div>
+        )
+    }
+});
+
 var AddSourceForm = React.createClass({
+    getInitialState: function() {
+        socket.on('source:invalid', this.handleError)
+        return {}
+    },
+    handleError: function(error) {
+        alert(error.error)
+    },
     handleSubmit: function(e) {
         e.preventDefault();
         var title = this.refs.title.getDOMNode().value.trim();
@@ -41,6 +94,8 @@ var AddSourceForm = React.createClass({
             return;
         }
         socket.emit('sources:new', {title: title, url: url});
+        title = "";
+        url = "";
     },
     render: function() {
         return (
@@ -57,7 +112,7 @@ var DisplayCase = React.createClass({
     render: function() {
         var containers = this.props.data.map(function(container) {
             return (
-                <NewsContainer url={container.url} title={container.title} sourceID={container.sourceID} numItems={10} />
+                <NewsContainer key={container.id} url={container.url} title={container.title} sourceID={container.sourceID} numItems={10} />
             );
         });
 
@@ -103,7 +158,7 @@ var NewsStand = React.createClass({
         return (
             <div className="news-stand twelve columns">
                 <DisplayCase url={this.props.url} data={this.state.data} />
-                <AddSourceForm url={this.props.url} />
+                <SideBar url={this.props.url} />
             </div>
         );
     }
@@ -111,6 +166,6 @@ var NewsStand = React.createClass({
 });
 
 React.render(
-    <NewsStand url='http://localhost:3000/sources' pollInterval={2000} />,
+    <NewsStand url='http://localhost:3000/sources' />,
     document.getElementById('content')
 )
