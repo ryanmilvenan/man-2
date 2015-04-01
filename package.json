@@ -5,7 +5,9 @@
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.4.3",
+    "connect-mongo": "^0.7.0",
     "express": "^4.4.5",
+    "express-session": "^1.10.4",
     "feedparser": "^1.0.0",
     "mongoose": "^3.8.25",
     "node-uuid": "^1.4.3",
