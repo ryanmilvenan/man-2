@@ -27,16 +27,35 @@
     content: "\ea0a";
 }
 
-.icon-cross:before {
-    content: "\ea0f";
-}
-
-.icon-cross {
-    color: red;
-}
-
 .icon-plus {
-    color: blue;
+    color: #1A619F;
+}
+
+.icon-cog:before {
+  content: "\e994";
+}
+
+.icon-cog {
+    color: #B8BCBF;
+}
+
+.icon-cross:before {
+  content: "\ea0f";
+}
+
+.icon-bin:before {
+  content: "\e9ac";
+}
+
+.down-button {
+    z-index: 3;
+    position: relative;
+    display: block-inline;
+    float:right;
+}
+
+.dropdown-meno{
+  overflow: visible;
 }
 
 body {
@@ -107,17 +126,65 @@ ul {
   padding-left: 30px;
 }
 
+.title{
+  border-bottom: 0px;
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
 .add-source-form {
     padding-left: 1em;
-    border-left: 1px solid black;
+    /*border-left: 1px solid black;*/
+}
+
+.add-source-form Input {
+  width: auto;
+}
+
+.add-source-inputs{
+  padding-right: 0px;
+}
+
+.side-bar{
+  float: right;
+}
+
+.remove-tab-button {
+    height:1em;
+    width:1em;
+    float: left;
+    font-size:20px;
+    position: relative;
+}
+
+.remove-tab-button a {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-decoration: none;
+    z-index: 10;
+    float: left;
+    color: red;
+}
+
+.remove-tab-name{
+  margin: 0 0 0 10px;
+  float: left;
+  display: inline-block;
 }
 
 .news-container {
-    width:10em;
+    /*width:10em;*/
     border: 1px solid blue;
     border-radius: 5px;
     padding-left:0.3em;
     padding-right:0.3em;
+    margin:0.3em;
 }
 
 .container-title {
@@ -128,6 +195,10 @@ ul {
 .feed-item {
     border-bottom: 1px dashed black;
     z-index: -1;
+}
+
+.import-export-buttons{
+  text-align: center;
 }
 
 .delete-button {
@@ -146,6 +217,27 @@ ul {
     left: 0;
     text-decoration: none;
     z-index: 10;
+}
+
+.add-button {
+    height:1em;
+    width:1em;
+    float: right;
+    position: fixed;
+    font-size:70px;
+    bottom: 70px;
+    right: 50px;
+}
+
+.add-button a {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-decoration: none;
+    z-index: 10;
+    float: right;
 }
 
 .expand-button {
@@ -169,3 +261,93 @@ ul {
     text-decoration: none;
     z-index: 10;
 }
+
+.menu-button {
+    height:1em;
+    width:1em;
+    float: right;
+    font-size:40px;
+    position: relative;
+}
+
+.menu-button a {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-decoration: none;
+    z-index: 10;
+    float: right;
+}
+
+.react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top;
+}
+.react-grid-item.cssTransforms {
+  transition-property: transform;
+}
+.react-grid-item.resizing {
+  z-index: 1;
+}
+.react-grid-placeholder {
+  background: red;
+  opacity: 0.2;
+  transition-duration: 100ms;
+  z-index: 2;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.react-grid-item.react-draggable-dragging {
+  transition: none;
+  z-index: 3;
+}
+.react-draggable {
+  position: relative;
+}
+.react-draggable-active {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.react-grid-resize-handle {
+  position: absolute;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  line-height: 28px;
+  font-size: 20px;
+  text-align: right;
+  cursor: se-resize;
+}
+.react-grid-item:hover .react-grid-resize-handle {
+  opacity: 1;
+}
+
+.log-out-btn {
+    width: 100%;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 0.8em;
+    padding: 10px 15px;
+}
+
+.search-bar {
+    overflow:hidden;
+    margin:0 auto 0 2em;
+    padding:0;
+    width:408px;
+    height:40px;
+    display: inline-block;
+} 
+
