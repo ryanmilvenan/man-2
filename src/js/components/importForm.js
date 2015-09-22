@@ -22,7 +22,7 @@ var ImportForm = React.createClass({
     this.props.onRequestHide()
   },  
   handleSelect: function(activeKey) {
-    this.setState({ activeKey });
+    this.setState({ activeKey: activeKey });
   },
   render: function() {
     return (
