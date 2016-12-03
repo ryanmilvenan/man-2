@@ -1,4 +1,4 @@
 node_modules/
 mongodb/
 *.DS_Store
-public/scripts/bundle.js
+public/
